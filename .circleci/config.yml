@@ -11,6 +11,8 @@ jobs:
 
     steps:
       - checkout
+      - run: cd lab1 && npm install
+      - run: cd lab1 && npm test
       - run: cd lab2 && npm install
       - run: cd lab2 && npm test
 
