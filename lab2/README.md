@@ -1,7 +1,5 @@
 # TUM-NP-lab2
 
-Laboratory work for Network Programming (Programarea în Rețea) at Technical University of Moldova
-
 ## Lab description
 
 In this repository we will try to implement [Metrics Aggregator](https://github.com/Alexx-G/PR-labs/blob/master/lab2-3.md#metrics-aggregator).  
