@@ -5,7 +5,7 @@
 In this repository we will try to implement [Metrics Aggregator](https://github.com/Alexx-G/PR-labs/blob/master/lab2-3.md#metrics-aggregator).  
 
 ### Roles:
-* [Dragoș Străinu](https://github.com/strdr4605/): Unit testing, documentation (see out folder or documentation.md). [![CircleCI](https://circleci.com/gh/strdr4605/TUM-NP-labs.svg?style=svg)](https://circleci.com/gh/strdr4605/TUM-NP-labs)
+* [Dragoș Străinu](https://github.com/strdr4605/): Unit testing, documentation (see [out folder](https://github.com/strdr4605/TUM-NP-labs/tree/master/lab2/out) or [documentation.md](https://github.com/strdr4605/TUM-NP-labs/blob/master/lab2/documentation.md)). [![CircleCI](https://circleci.com/gh/strdr4605/TUM-NP-labs.svg?style=svg)](https://circleci.com/gh/strdr4605/TUM-NP-labs)
 * [Stanislav Spatari](https://github.com/sspatari/): Development.
 
 ## Babel Node.js
