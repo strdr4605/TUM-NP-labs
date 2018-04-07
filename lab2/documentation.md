@@ -56,4 +56,4 @@ Class that responds for parsing different formats of data and return a javascrip
 Post request to the API.
 
 **Kind**: global function
-**Returns**: <code>Promise.&lt;Object&gt;</code> - The response from the API.
+**Returns**: <code>Promise.&lt;Object&gt;</code> - An Object with 2 keys. {key: 'session key from response headers', paths: 'response body'}

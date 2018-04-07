@@ -17,7 +17,7 @@ class MetricsAggregator {
      *
      * @async
      * @function getKeyAndDevicesPaths
-     * @return {Promise<Object>} The response from the API.
+     * @return {Promise<Object>} An Object with 2 keys. {key: 'session key from response headers', paths: 'response body'}
      */
     getKeyAndDevicesPaths() {
 
