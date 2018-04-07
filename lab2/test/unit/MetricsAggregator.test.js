@@ -25,3 +25,18 @@ test('getKeyAndDevicesPaths Promise return object key type is string, value 42',
         expect(data.key.length).toBe(42);
     });
 });
+
+test('getDeviceData Promise return object', () => {
+    expect.assertions(1);
+    return metricsAggregator.getDeviceData('', '').then(data => {
+        expect(typeof data).toBe('object');
+    });
+});
+
+test('getDeviceData Promise return object has property contentType and data', () => {
+    expect.assertions(2);
+    return metricsAggregator.getDeviceData('', '').then(data => {
+        expect(data).toHaveProperty('contentType');
+        expect(data).toHaveProperty('data');
+    });
+});

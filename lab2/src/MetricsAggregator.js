@@ -16,10 +16,21 @@ class MetricsAggregator {
      * Post request to the API.
      *
      * @async
-     * @function getKeyAndDevicesPaths
      * @return {Promise<Object>} An Object with 2 keys. {key: 'session key from response headers', paths: 'response body'}
      */
     getKeyAndDevicesPaths() {
+
+    }
+
+    /**
+     * GET request to the device path.
+     * 
+     * @async
+     * @param {string} key - The key for the currect session
+     * @param {string} path - The path of the specific device
+     * @return {Promise<Object>} An Object with 2 keys. {contentType: 'type of data format', data: 'response body'}
+     */
+    getDeviceData(key, path) {
 
     }
 }
