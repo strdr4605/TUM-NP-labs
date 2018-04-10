@@ -1,4 +1,6 @@
 import request from 'request'
+import cliProgress from 'cli-progress'
+import DataParser from './DataParser'
 /**
  * Main Class of the project.
  * It responds for api requests and data aggregation.
@@ -11,24 +13,43 @@ class MetricsAggregator {
      */
     constructor(url) {
         this.url = url
+        this.progressBar = new cliProgress.Bar({}, cliProgress.Presets.rect)
+        this.completedRequests = 0
         this.getKeyAndDevicesPaths()
             .then(result => {
-                return this.getArrayOfDeviceData(result)
+                return this.getRawDeviceDataArray(result)
+            })
+            .then((result) => {
+                return this.getParcedDeviceDataArray(result)
             })
             .then((result) => {
                 console.log(result)
             })
             .catch((error) => {
-                console.log('Error, ' + error)
+                console.log('\nError, ' + error)
             })
     }
 
-    getArrayOfDeviceData(object) {
+    getRawDeviceDataArray(object) {
         let promises = []
         for(let elem of object['devicePaths']) {
             promises.push(this.getDeviceData(object['key'], elem['path']))
         }
+        this.totalRequests = promises.length
         return Promise.all(promises)
+    }
+
+    getParcedDeviceDataArray(rawDeviceDataArray) {
+        let parsedDeviceDataArray = []
+        let dataParser = new DataParser()
+        for(let rawDeviceData of rawDeviceDataArray) {
+            if(rawDeviceData['contentType'] == 'text/plain; charset=utf-8') {
+                console.log(rawDeviceData['data'])
+            } else {
+                parsedDeviceDataArray.push(...dataParser.parse(rawDeviceData['contentType'], rawDeviceData['data']))
+            }
+        }
+        return parsedDeviceDataArray
     }
 
     /**
@@ -38,6 +59,8 @@ class MetricsAggregator {
      * @return {Promise<Object>} An Object with 2 keys. {key: 'session key from response headers', paths: 'response body'}
      */
     getKeyAndDevicesPaths() {
+        console.log('Requests in progress...')
+        this.progressBar.start(100, 0);
         return new Promise((resolve, reject) => {
             request.post(this.url, (err, res, body) => {
                 if(err) {
@@ -74,10 +97,15 @@ class MetricsAggregator {
                 if(err) {
                     reject('GET failed, ' + err)
                 } else {
+                    ++this.completedRequests
+                    this.progressBar.update((this.completedRequests / this.totalRequests * 100).toFixed(2))
+                    if(this.completedRequests == this.totalRequests)
+                        this.progressBar.stop();
                     resolve({
                         contentType: res.headers['content-type'],
                         data: body
                     })
+
                 }
             })
         })

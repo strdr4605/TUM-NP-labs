@@ -30,6 +30,8 @@
     "jsdoc": "^3.5.5"
   },
   "dependencies": {
-    "request": "^2.85.0"
+    "cli-progress": "^1.8.0",
+    "request": "^2.85.0",
+    "xml2js": "^0.4.19"
   }
 }
