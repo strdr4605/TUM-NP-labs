@@ -1,5 +1,6 @@
 import config from './../../src/config'
 import MetricsAggregator from './../../src/MetricsAggregator'
+import cliProgress from 'cli-progress'
 
 let metricsAggregator = new MetricsAggregator(config.apiUrl)
 
@@ -14,7 +15,7 @@ test('getKeyAndDevicesPaths Promise return object has property key and paths', (
     expect.assertions(2);
     return metricsAggregator.getKeyAndDevicesPaths().then(data => {
         expect(data).toHaveProperty('key');
-        expect(data).toHaveProperty('paths');
+        expect(data).toHaveProperty('devicePaths');
     });
 });
 
