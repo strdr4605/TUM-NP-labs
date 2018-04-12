@@ -15,19 +15,48 @@ class MetricsAggregator {
         this.url = url
         this.progressBar = new cliProgress.Bar({}, cliProgress.Presets.rect)
         this.completedRequests = 0
-        this.getKeyAndDevicesPaths()
+        this.aggregatedData = []
+    }
+
+    async createAgregatedData() {
+        let rawDeviceDataArray = await this.getKeyAndDevicesPaths()
             .then(result => {
                 return this.getRawDeviceDataArray(result)
-            })
-            .then((result) => {
-                return this.getParcedDeviceDataArray(result)
-            })
-            .then((result) => {
-                console.log(result)
             })
             .catch((error) => {
                 console.log('\nError, ' + error)
             })
+
+        let parcedDeviceDataArray = this.getParcedDeviceDataArray(rawDeviceDataArray)
+
+        for(let deviceData of parcedDeviceDataArray) {
+            if(this.aggregatedData[deviceData['type']] === undefined) {
+                this.aggregatedData[deviceData['type']] = []
+            }
+            this.aggregatedData[deviceData['type']].push({
+                id: deviceData['id'],
+                value: deviceData['value']
+            })
+        }
+    }
+
+    async showAgregatedData() {
+        await this.createAgregatedData()
+        console.log('')
+        for(let [index, deviceArray] of this.aggregatedData.entries()) {
+            let deviceName = index == 0 ? 'Temperature'     :
+                             index == 1 ? 'Humidity'        :
+                             index == 2 ? 'Motion'          :
+                             index == 3 ? 'Alien Presence'  :
+                             index == 4 ? 'Dark Matter'     : 'Unknown'
+            console.log(`${deviceName}:`)
+            if(deviceArray !== undefined) {
+                for(let device of deviceArray) {
+                    console.log(`Device ${device['id']} - ${device['value']}`)
+                }
+            }
+            console.log('')
+        }
     }
 
     getRawDeviceDataArray(object) {
