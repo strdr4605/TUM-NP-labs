@@ -18,7 +18,7 @@ class MetricsAggregator {
         this.aggregatedData = []
     }
 
-    async createAgregatedData() {
+    async getAgregatedData() {
         let rawDeviceDataArray = await this.getKeyAndDevicesPaths()
             .then(result => {
                 return this.getRawDeviceDataArray(result)
@@ -29,19 +29,22 @@ class MetricsAggregator {
 
         let parcedDeviceDataArray = this.getParcedDeviceDataArray(rawDeviceDataArray)
 
+        let tempAgregatedData = []
         for(let deviceData of parcedDeviceDataArray) {
-            if(this.aggregatedData[deviceData['type']] === undefined) {
-                this.aggregatedData[deviceData['type']] = []
+            if(tempAgregatedData[deviceData['type']] === undefined) {
+                tempAgregatedData[deviceData['type']] = []
             }
-            this.aggregatedData[deviceData['type']].push({
+            tempAgregatedData[deviceData['type']].push({
                 id: deviceData['id'],
                 value: deviceData['value']
             })
         }
+
+        return tempAgregatedData;
     }
 
     async showAgregatedData() {
-        await this.createAgregatedData()
+        this.aggregatedData = await this.getAgregatedData()
         console.log('')
         for(let [index, deviceArray] of this.aggregatedData.entries()) {
             let deviceName = index == 0 ? 'Temperature'     :
