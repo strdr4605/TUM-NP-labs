@@ -92,7 +92,8 @@ class MetricsAggregator {
     /**
      * Take the devices data and convert it to an Object using DataParser Class methods according to data's content type
      * 
-     * @param {Array<Object>} rawDeviceDataArray 
+     * @param {Array<Object>} rawDeviceDataArray - device data in different formats
+     * @return {Array<Object>} Array with devices data converted to Objects
      */
     getParcedDeviceDataArray(rawDeviceDataArray) {
         let parsedDeviceDataArray = []

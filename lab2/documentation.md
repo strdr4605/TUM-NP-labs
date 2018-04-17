@@ -23,7 +23,7 @@ It responds for api requests and data aggregation.
     * [.getAgregatedData()](#MetricsAggregator+getAgregatedData) ⇒ <code>Array.&lt;Array.&lt;Object&gt;&gt;</code>
     * [.showAgregatedData()](#MetricsAggregator+showAgregatedData)
     * [.getRawDeviceDataArray(object)](#MetricsAggregator+getRawDeviceDataArray) ⇒ <code>Array.&lt;Promise.&lt;Object&gt;&gt;</code>
-    * [.getParcedDeviceDataArray(rawDeviceDataArray)](#MetricsAggregator+getParcedDeviceDataArray)
+    * [.getParcedDeviceDataArray(rawDeviceDataArray)](#MetricsAggregator+getParcedDeviceDataArray) ⇒ <code>Array.&lt;Object&gt;</code>
     * [.getKeyAndDevicesPaths()](#MetricsAggregator+getKeyAndDevicesPaths) ⇒ <code>Promise.&lt;Object&gt;</code>
     * [.getDeviceData(key, path)](#MetricsAggregator+getDeviceData) ⇒ <code>Promise.&lt;Object&gt;</code>
 
@@ -64,14 +64,15 @@ GET request to the API device paths
 
 <a name="MetricsAggregator+getParcedDeviceDataArray"></a>
 
-### metricsAggregator.getParcedDeviceDataArray(rawDeviceDataArray)
+### metricsAggregator.getParcedDeviceDataArray(rawDeviceDataArray) ⇒ <code>Array.&lt;Object&gt;</code>
 Take the devices data and convert it to an Object using DataParser Class methods according to data's content type
 
 **Kind**: instance method of [<code>MetricsAggregator</code>](#MetricsAggregator)
+**Returns**: <code>Array.&lt;Object&gt;</code> - Array with devices data converted to Objects
 
-| Param | Type |
-| --- | --- |
-| rawDeviceDataArray | <code>Array.&lt;Object&gt;</code> |
+| Param | Type | Description |
+| --- | --- | --- |
+| rawDeviceDataArray | <code>Array.&lt;Object&gt;</code> | device data in different formats |
 
 <a name="MetricsAggregator+getKeyAndDevicesPaths"></a>
 
