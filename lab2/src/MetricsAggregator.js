@@ -18,6 +18,12 @@ class MetricsAggregator {
         this.aggregatedData = []
     }
 
+    /**
+     * Get devices data, parse and return it for next operations
+     * 
+     * @async
+     * @return {Array<Array<Object>>} Array of agregated data objects separated in a arrays
+     */
     async getAgregatedData() {
         let rawDeviceDataArray = await this.getKeyAndDevicesPaths()
             .then(result => {
@@ -43,6 +49,11 @@ class MetricsAggregator {
         return tempAgregatedData;
     }
 
+    /**
+     * Show agregated data sorted by types
+     * 
+     * @async
+     */
     async showAgregatedData() {
         this.aggregatedData = await this.getAgregatedData()
         console.log('')
@@ -62,6 +73,13 @@ class MetricsAggregator {
         }
     }
 
+    /**
+     * GET request to the API device paths
+     * 
+     * @async
+     * @param {Object} object - Object with session's key and devicePaths
+     * @return {Array<Promise<Object>>} An Array of Objects with device data and content type
+     */
     getRawDeviceDataArray(object) {
         let promises = []
         for(let elem of object['devicePaths']) {
@@ -71,6 +89,11 @@ class MetricsAggregator {
         return Promise.all(promises)
     }
 
+    /**
+     * Take the devices data and convert it to an Object using DataParser Class methods according to data's content type
+     * 
+     * @param {Array<Object>} rawDeviceDataArray 
+     */
     getParcedDeviceDataArray(rawDeviceDataArray) {
         let parsedDeviceDataArray = []
         let dataParser = new DataParser()
@@ -85,7 +108,7 @@ class MetricsAggregator {
     }
 
     /**
-     * Post request to the API.
+     * POST request to the API.
      *
      * @async
      * @return {Promise<Object>} An Object with 2 keys. {key: 'session key from response headers', paths: 'response body'}
