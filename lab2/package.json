@@ -23,11 +23,16 @@
   "homepage": "https://github.com/sspatari/babel-nodejs-starter#readme",
   "devDependencies": {
     "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-2": "^6.24.1",
     "babel-register": "^6.26.0",
     "jest": "^22.4.3",
     "jsdoc": "^3.5.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "cli-progress": "^1.8.0",
+    "request": "^2.85.0",
+    "xml2js": "^0.4.19"
+  }
 }
