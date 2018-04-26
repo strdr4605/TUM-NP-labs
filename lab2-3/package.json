@@ -1,0 +1,38 @@
+{
+  "name": "babel-nodejs-setup",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "start": "node bin/dev",
+    "nodemon": "nodemon bin/dev",
+    "clean": "rm -rf dist",
+    "build": "npm run clean && babel src -s -d dist",
+    "production": "npm run build && node bin/production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/sspatari/babel-nodejs-starter.git"
+  },
+  "author": "Spatari Stanislav",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sspatari/babel-nodejs-starter/issues"
+  },
+  "homepage": "https://github.com/sspatari/babel-nodejs-starter#readme",
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "jest": "^22.4.3",
+    "jsdoc": "^3.5.5"
+  },
+  "dependencies": {
+    "cli-progress": "^1.8.0",
+    "request": "^2.85.0",
+    "xml2js": "^0.4.19"
+  }
+}
