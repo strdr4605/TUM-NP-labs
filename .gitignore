@@ -58,3 +58,5 @@ typings/
 .env
 
 .DS_Store
+
+lab4/src/client_secret.json

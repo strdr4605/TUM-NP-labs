@@ -1,7 +1,8 @@
 var fs = require('fs');
 var readline = require('readline');
 var {google} = require('googleapis');
-var googleAuth = require('google-auth-library');
+var {GoogleAuth} = require('google-auth-library');
+var {OAuth2Client} = require('google-auth-library');
 
 // If modifying these scopes, delete your previously saved credentials
 // at ~/.credentials/gmail-nodejs-quickstart.json
@@ -32,8 +33,8 @@ function authorize(credentials, callback) {
   var clientSecret = credentials.installed.client_secret;
   var clientId = credentials.installed.client_id;
   var redirectUrl = credentials.installed.redirect_uris[0];
-  var auth = new googleAuth();
-  var oauth2Client = new auth.OAuth2(clientId, clientSecret, redirectUrl);
+  var auth = new GoogleAuth();
+  var oauth2Client = new OAuth2Client(clientId, clientSecret, redirectUrl);
 
   // Check if we have previously stored a token.
   fs.readFile(TOKEN_PATH, function(err, token) {
@@ -91,7 +92,11 @@ function storeToken(token) {
       throw err;
     }
   }
-  fs.writeFile(TOKEN_PATH, JSON.stringify(token));
+  fs.writeFile(TOKEN_PATH, JSON.stringify(token), (err) => {
+    if(err) {
+      console.log(`Error is ${err}`);
+    }
+  });
   console.log('Token stored to ' + TOKEN_PATH);
 }
 
@@ -110,7 +115,8 @@ function listLabels(auth) {
       console.log('The API returned an error: ' + err);
       return;
     }
-    var labels = response.labels;
+    var labels = response.data.labels;
+    console.log(labels);
     if (labels.length == 0) {
       console.log('No labels found.');
     } else {

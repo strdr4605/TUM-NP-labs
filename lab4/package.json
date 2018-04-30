@@ -29,7 +29,6 @@
     "jest": "^22.4.3"
   },
   "dependencies": {
-    "google-auth-library": "^0.12.0",
     "googleapis": "^27.0.0"
   }
 }
