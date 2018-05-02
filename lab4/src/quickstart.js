@@ -1,3 +1,4 @@
+var util = require('util');
 var fs = require('fs');
 var readline = require('readline');
 var {google} = require('googleapis');
@@ -43,6 +44,19 @@ function authorize(credentials, callback) {
     } else {
       oauth2Client.credentials = JSON.parse(token);
       callback(oauth2Client);
+      listMessages(oauth2Client, 'me', 'eurowings')
+      .then((messages) => {
+        console.log(messages);
+        console.log(messages.length);
+        for(let message of messages) {
+          getMessage(oauth2Client, 'me', message.id, (result) => {
+            console.log(result);
+          });
+        }
+      })
+      .catch((err) => {
+        console.log('Error is: ' + err);
+      });
     }
   });
 }
@@ -116,7 +130,7 @@ function listLabels(auth) {
       return;
     }
     var labels = response.data.labels;
-    console.log(labels);
+    // console.log(labels);
     if (labels.length == 0) {
       console.log('No labels found.');
     } else {
@@ -127,4 +141,46 @@ function listLabels(auth) {
       }
     }
   });
+}
+
+async function listMessages(auth, userId, query) {
+  return new Promise(async (resolve, reject) => {
+    var gmail = google.gmail('v1');
+    gmailUserMessagesListPromisefied = util.promisify(gmail.users.messages.list);
+    var getPageOfMessages = async function(response, messageArray) {
+      // console.log(response);
+      messageArray = messageArray.concat(response.data.messages);
+      var nextPageToken = response.data.nextPageToken;
+      if (nextPageToken) {
+        let response = await gmailUserMessagesListPromisefied({
+          auth: auth,
+          userId: userId,
+          pageToken: nextPageToken,
+          q: query
+        });
+        getPageOfMessages(response, messageArray);
+      } else {
+        resolve(messageArray);
+      }
+    };
+
+    var response = await gmailUserMessagesListPromisefied({
+      auth: auth,
+      userId: userId,
+      q: query
+    });
+
+    getPageOfMessages(response, []);
+  });
+}
+
+async function getMessage(auth, userId, messageId, callback) {
+  var gmail = google.gmail('v1');
+  gmailUserMessagesGetPromisefied = util.promisify(gmail.users.messages.get);
+  var response = await gmailUserMessagesGetPromisefied({
+    auth: auth,
+    userId: userId,
+    id: messageId
+  });
+  callback(response);
 }
